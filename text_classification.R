@@ -27,7 +27,7 @@ corpus <- tm_map(corpus, stemDocument)
 
 
 #Counting the frequencies
-frequencies <- DocumentTermMatrix(corpus)
+frequencies <- DocumentTermMatrix(corpus,control = list(weighting = weightTfIdf))
 
 freq <- colSums(as.matrix(freq))
 ord <- order(freq)
@@ -43,13 +43,13 @@ train$cuisine <- as.factor(train$cuisine)
 
 #CART Model
 
-cart_model <- rpart(cuisine ~ . , data=final_train, method="class")
+#cart_model <- rpart(cuisine ~ . , data=final_train, method="class")
 
-confusionMatrix(predict(cart_model,type="class"),train$cuisine)
+#confusionMatrix(predict(cart_model,type="class"),train$cuisine)
 
-test$cuisine <- predict(cart_model, newdata = final_test, type="class")
+#test$cuisine <- predict(cart_model, newdata = final_test, type="class")
 
-write.csv(test[,c("id","cuisine")],file = "cart_op.csv", row.names = FALSE)
+#write.csv(test[,c("id","cuisine")],file = "cart_op.csv", row.names = FALSE)
 
 #Random Forest
 library(ggplot2)
@@ -60,4 +60,4 @@ confusionMatrix(predict(random_for,type = "class"),train$cuisine)
 
 test$cuisine <- predict(random_for, newdata = final_test, type="class")
 
-write.csv(test[,c("id","cuisine")],file = "rf_op.csv", row.names = FALSE)
+write.csv(test[,c("id","cuisine")],file = "sample_submission.csv", row.names = FALSE)
