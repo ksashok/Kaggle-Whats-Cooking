@@ -54,6 +54,7 @@ train$cuisine <- as.factor(train$cuisine)
 #Random Forest
 library(ggplot2)
 library(randomForest)
+
 random_for <- randomForest(cuisine ~., data=final_train,importance=TRUE,ntree=20)
 
 confusionMatrix(predict(random_for,type = "class"),train$cuisine)
